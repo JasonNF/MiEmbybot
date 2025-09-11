@@ -32,7 +32,7 @@ services:
 #    depends_on:
 #      - mysql
 
-  embyboss:
+  Embybot:
     image: JasonNF/MiEmbybot:latest # ARM与AMD镜像名称相同，会自动加载适合的镜像
     container_name: Embybot
     restart: always
