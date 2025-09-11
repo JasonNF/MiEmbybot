@@ -7,11 +7,11 @@
   "group": [
     -100xxxxxx
   ],
-  "main_group": "Aaaaa_su",
-  "chanel": "su_yxfy",
+  "main_group": "XXXXX",
+  "chanel": "XXXXX",
   "bot_photo": "https://telegra.ph/file/3b6cd2a89b652e72e0d3b.png",
   "admins": [],
-  "money": "花币",
+  "money": "M币",
   "emby_api": "xxxxx",
   "emby_url": "http://255.255.255.255:8096",
   "emby_line": "susuyyds.com",
@@ -55,15 +55,15 @@
     "invite": false,
     "leave_ban": true,
     "uplays": true,
-    "exchange_cost": 100,
+    "exchange_cost": 200,
     "whitelist_cost": 9999,
-    "invite_cost": 1000
+    "invite_cost": 200
   },
   "tz_ad": "",
   "tz_api": "",
   "tz_id": [],
   "ranks": {
-    "logo": "SAKURA",
+    "logo": "Misaya",
     "backdrop": false
   },
   "schedall": {
@@ -97,7 +97,7 @@
   },
   "auto_update": {
     "status": true,
-    "git_repo": "berry8838/Sakura_embyboss",
+    "git_repo": "JasonNF/MiEmbybot",
     "commit_sha": null
   },
   "api": {
