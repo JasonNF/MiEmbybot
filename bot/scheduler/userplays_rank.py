@@ -45,7 +45,7 @@ class Uplaysinfo:
                 }
 
             rank_medals = ["🥇", "🥈", "🥉", "🏅"]
-            rank_points = []
+            #rank_points = []
 
             pages_data = []
             leaderboard_data = []
@@ -67,8 +67,7 @@ class Uplaysinfo:
                         tg = member_info["tg"]
 
                         # 计算积分
-                        points = rank_points[rank - 1] + (int(play_record[1]) // 1800) if rank <= 10 else (
-                                    int(play_record[1]) // 1800)
+                        points = int(play_record[1]) // 1800)
                         new_iv = member_info["iv"] + points
                         leaderboard_data.append([member_info["tg"], new_iv, f'{medal}{emby_name}', points])
 
