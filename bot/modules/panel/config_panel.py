@@ -327,7 +327,7 @@ async def open_leave_ban(_, call):
     LOGGER.info(log_message)
 
 
-@bot.on_callback_query(filters.regex('set_uplays') & admins_on_filter)
+@bot.on_callback_query(filters.regex('^set_uplays$') & admins_on_filter)
 async def set_user_playrank(_, call):
     _open.uplays = not _open.uplays
     if not _open.uplays:
@@ -445,3 +445,43 @@ async def set_activity_check_days(_, call):
                               f"🕰️ 【活跃检测天数】\n\n{days}天 **Done!**",
                               buttons=back_config_p_ikb)
             LOGGER.info(f"【admin】：{call.from_user.id} - 更新活跃检测天数为{days}天完成")
+
+
+@bot.on_callback_query(filters.regex('^set_uplays_ratio$') & admins_on_filter)
+async def set_uplays_ratio(_, call):
+    """设置观影换算比例（秒/币）"""
+    try:
+        current = getattr(_open, 'uplays_seconds_per_coin', 1800)
+        await callAnswer(call, '📌 设置观影换算比例（秒/币）')
+        send = await editMessage(call,
+                                 f"🎬 设置观影换算比例（秒/币）\n\n"
+                                 f"当前比例：{current} 秒/币\n"
+                                 f"请输入新的数值（必须为正整数，例如 1800）\n"
+                                 f"取消点击 /cancel")
+        if send is False:
+            return
+        txt = await callListen(call, 120, back_set_ikb('set_uplays_ratio'))
+        if txt is False:
+            return
+        elif txt.text == '/cancel':
+            await txt.delete()
+            await editMessage(call, '__您已经取消输入__ **会话已结束！**', buttons=back_set_ikb('set_uplays_ratio'))
+        else:
+            await txt.delete()
+            try:
+                value = int(txt.text)
+                if value <= 0:
+                    raise ValueError
+            except ValueError:
+                await editMessage(call, f"请输入有效的正整数！您的输入如下：\n\n`{txt.text}`",
+                                  buttons=back_set_ikb('set_uplays_ratio'))
+            else:
+                _open.uplays_seconds_per_coin = value
+                save_config()
+                await editMessage(call,
+                                  f"🎬 观影换算比例已设置为：{value} 秒/币 \n**Done!**",
+                                  buttons=back_config_p_ikb)
+                LOGGER.info(f"【admin】：{call.from_user.id} - 更新观影换算比例为 {value} 秒/币 完成")
+    except Exception as e:
+        LOGGER.error(f"设置观影换算比例时出错: {str(e)}")
+        await editMessage(call, f"❌ 设置失败：{str(e)}", buttons=back_config_p_ikb)

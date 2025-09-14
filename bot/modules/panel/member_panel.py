@@ -19,6 +19,8 @@ from bot.func_helper.utils import members_info, tem_adduser, cr_link_one, judge_
 from bot.func_helper.fix_bottons import members_ikb, back_members_ikb, re_create_ikb, del_me_ikb, re_delme_ikb, \
     re_reset_ikb, re_changetg_ikb, emby_block_ikb, user_emby_block_ikb, user_emby_unblock_ikb, re_exchange_b_ikb, \
     store_ikb, re_bindtg_ikb, close_it_ikb, store_query_page, re_born_ikb, send_changetg_ikb, favorites_page_ikb
+from bot.func_helper.user_prefs import get_user_line, set_user_line
+from pyromod.helpers import ikb
 from bot.func_helper.msg_utils import callAnswer, editMessage, callListen, sendMessage, ask_return, deleteMessage
 from bot.modules.commands import p_start
 from bot.modules.commands.exchange import rgs_code
@@ -104,6 +106,61 @@ async def members(_, call):
         await editMessage(call, text, members_ikb(is_admin, False))
     else:
         await editMessage(call, text, members_ikb(account=True))
+
+
+# 线路切换入口
+@bot.on_callback_query(filters.regex('switch_line') & user_in_group_on_filter)
+async def switch_line_panel(_, call):
+    e = sql_get_emby(tg=call.from_user.id)
+    if not e:
+        return await callAnswer(call, '⚠️ 数据库没有你，请重新 /start录入', True)
+    if not e.embyid:
+        return await callAnswer(call, '❌ 未查询到账户，不许乱点！', True)
+    if e.lv not in ['a', 'b']:
+        return await callAnswer(call, '💢 您当前权限不支持切换线路', True)
+
+    lines = getattr(config, 'emby_lines', []) or []
+    if not lines:
+        return await editMessage(call, '🔌 管理员未配置可选线路（config.emby_lines 为空）', buttons=back_members_ikb)
+
+    current = get_user_line(call.from_user.id)
+    rows = []
+    for i, url in enumerate(lines):
+        mark = '✅' if current == url else '  '
+        rows.append([(f'{mark} 选择线路 {i+1}', f'set_line_{i}')])
+    rows.append([('↩️ 还原默认线路', 'set_line_clear')])
+    rows.append([('🔙 返回', 'members')])
+    await editMessage(call,
+                      '🌐 请选择适合你的 Emby 线路：\n\n'
+                      f'当前选择：{current or "默认"}\n\n'
+                      '提示：切换仅影响您在面板中看到的线路展示，Emby 账号与权限不变。',
+                      buttons=ikb(rows))
+
+
+@bot.on_callback_query(filters.regex('^set_line_\\d+$') & user_in_group_on_filter)
+async def set_line_choice(_, call):
+    e = sql_get_emby(tg=call.from_user.id)
+    if not e or not e.embyid:
+        return await callAnswer(call, '❌ 未查询到账户，不许乱点！', True)
+    lines = getattr(config, 'emby_lines', []) or []
+    try:
+        idx = int(call.data.split('_')[2])
+        url = lines[idx]
+    except Exception:
+        return await callAnswer(call, '❌ 选择无效', True)
+    set_user_line(call.from_user.id, url)
+    await callAnswer(call, '✅ 已切换线路', True)
+    return await switch_line_panel(_, call)
+
+
+@bot.on_callback_query(filters.regex('set_line_clear') & user_in_group_on_filter)
+async def clear_line_choice(_, call):
+    e = sql_get_emby(tg=call.from_user.id)
+    if not e or not e.embyid:
+        return await callAnswer(call, '❌ 未查询到账户，不许乱点！', True)
+    set_user_line(call.from_user.id, None)
+    await callAnswer(call, '✅ 已恢复默认线路', True)
+    return await switch_line_panel(_, call)
 
 
 # 创建账户

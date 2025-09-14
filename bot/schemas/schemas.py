@@ -53,6 +53,7 @@ class Open(BaseModel):
     invite_lv: Optional[str] = 'b'
     leave_ban: bool
     uplays: bool = True
+    uplays_seconds_per_coin: int = 1800
     checkin_reward: Optional[List[int]] = [1, 10]
     exchange_cost: int = 300
     whitelist_cost: int = 9999
@@ -149,6 +150,7 @@ class Config(BaseModel):
     emby_url: str
     emby_block: Optional[List[str]] = []
     emby_line: str
+    emby_lines: Optional[List[str]] = []
     extra_emby_libs: Optional[List[str]] = []
     db_host: str
     db_user: str

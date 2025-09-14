@@ -67,7 +67,11 @@ class Uplaysinfo:
                         tg = member_info["tg"]
 
                         # 计算积分
-                        points = int(play_record[1]) // 1800)
+                        # 使用全局配置的换算比例：uplays_seconds_per_coin（默认1800秒=1币）
+                        divisor = getattr(_open, 'uplays_seconds_per_coin', 1800) or 1800
+                        if divisor <= 0:
+                            divisor = 1800
+                        points = int(play_record[1]) // divisor
                         new_iv = member_info["iv"] + points
                         leaderboard_data.append([member_info["tg"], new_iv, f'{medal}{emby_name}', points])
 

@@ -1,0 +1,143 @@
+{
+  "bot_name": "EC-Bot",
+  "bot_token": "YOUR_TELEGRAM_BOT_TOKEN",
+  "owner_api": 123456,
+  "owner_hash": "YOUR_TELEGRAM_API_HASH",
+  "owner": 0,
+  "group": [-1001234567890],
+  "main_group": "your_group_username_or_link",
+  "chanel": "your_channel_username_or_link",
+  "bot_photo": "https://telegra.ph/file/3b6cd2a89b652e72e0d3b.png",
+
+  "open": {
+    "stat": true,
+    "open_us": 30,
+    "all_user": 1000,
+    "timing": 0,
+    "tem": 2,
+    "checkin": true,
+    "exchange": true,
+    "whitelist": true,
+    "invite": false,
+    "invite_lv": "b",
+    "leave_ban": true,
+    "uplays": false,
+    "uplays_seconds_per_coin": 1800,
+    "checkin_reward": [1, 10],
+    "exchange_cost": 200,
+    "whitelist_cost": 9999,
+    "invite_cost": 200
+  },
+
+  "admins": [],
+  "money": "M币",
+
+  "emby_api": "YOUR_EMBY_API_KEY",
+  "emby_url": "https://emby.example.com",
+  "emby_block": ["nsfw"],
+  "emby_line": "https://emby.example.com",
+  "emby_lines": [
+    "https://emby.example.com",
+    "https://usemby.example.com",
+    "https://sgemby.example.com"
+  ],
+  "extra_emby_libs": ["电视"],
+
+  "db_host": "localhost",
+  "db_user": "",
+  "db_pwd": "",
+  "db_name": "",
+  "db_port": 3306,
+
+  "tz_ad": "",
+  "tz_api": "",
+  "tz_id": [],
+
+  "ranks": {
+    "logo": "Misaya",
+    "backdrop": false
+  },
+
+  "schedall": {
+    "dayrank": true,
+    "weekrank": true,
+    "dayplayrank": false,
+    "weekplayrank": false,
+    "check_ex": true,
+    "low_activity": false,
+    "day_ranks_message_id": 0,
+    "week_ranks_message_id": 0,
+    "restart_chat_id": 0,
+    "restart_msg_id": 0,
+    "backup_db": false
+  },
+
+  "db_is_docker": false,
+  "db_docker_name": "mysql",
+  "db_backup_dir": "./db_backup",
+  "db_backup_maxcount": 7,
+
+  "w_anti_channel_ids": [],
+
+  "proxy": {
+    "scheme": "",
+    "hostname": "",
+    "port": null,
+    "username": "",
+    "password": ""
+  },
+
+  "kk_gift_days": 30,
+  "fuxx_pitao": true,
+  "activity_check_days": 21,
+  "freeze_days": 5,
+  "emby_whitelist_line": null,
+
+  "blocked_clients": [
+    ".*curl.*",
+    ".*wget.*",
+    ".*python.*",
+    ".*bot.*",
+    ".*spider.*",
+    ".*crawler.*",
+    ".*scraper.*",
+    ".*downloader.*",
+    ".*aria2.*",
+    ".*youtube-dl.*",
+    ".*yt-dlp.*",
+    ".*ffmpeg.*",
+    ".*vlc.*"
+  ],
+  "client_filter_terminate_session": true,
+  "client_filter_block_user": false,
+
+  "moviepilot": {
+    "status": false,
+    "url": null,
+    "username": null,
+    "password": null,
+    "access_token": null,
+    "price": 1,
+    "download_log_chatid": null,
+    "lv": "b"
+  },
+
+  "auto_update": {
+    "status": true,
+    "git_repo": "JasonNF/MiEmbybot",
+    "commit_sha": null,
+    "up_description": null
+  },
+
+  "red_envelope": {
+    "status": true,
+    "allow_private": true
+  },
+
+  "api": {
+    "status": true,
+    "http_url": "0.0.0.0",
+    "http_port": 8838,
+    "allow_origins": ["*"]
+  }
+}

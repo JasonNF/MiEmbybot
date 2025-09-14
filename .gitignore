@@ -13,3 +13,9 @@ __pycache__
 log
 *.sql
 bot-env
+# Sensitive configs and sessions
+config.json
+*.session
+*.session-journal
+data/user_prefs.json
+mysql_data/
